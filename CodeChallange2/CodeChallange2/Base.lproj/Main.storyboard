@@ -20,17 +20,12 @@
                                 <rect key="frame" x="20" y="806" width="374" height="36"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OAf-kP-Dl7">
-                                        <rect key="frame" x="0.0" y="0.0" width="107.5" height="36"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="174" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Redraw"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JPi-e0-nGe">
-                                        <rect key="frame" x="133.5" y="0.0" width="107" height="36"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <state key="normal" title="Shuffle"/>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zkG-UR-eJp">
-                                        <rect key="frame" x="266.5" y="0.0" width="107.5" height="36"/>
+                                        <rect key="frame" x="200" y="0.0" width="174" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Evaluate"/>
                                     </button>
@@ -65,6 +60,9 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="120" height="160"/>
+                                        <connections>
+                                            <outlet property="imageView" destination="p7k-KL-yEY" id="cBj-Pf-eJO"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>

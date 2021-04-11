@@ -5,20 +5,83 @@
 //  Created by Ron Avrahami on 4/11/21.
 //
 
-import Foundation
+import UIKit
 
 class JSONManager {
     
-    func getCards() {
-        // https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1
-
+    let decoder = JSONDecoder()
+    var deck: Deck?
+    var cards = [Card]()
+    
+    func getDeck() {
+        
+        let urlString = "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1"
+        
+        if let url = URL(string: urlString) {
+            if let data = try? Data(contentsOf: url) {
+                
+                parseDeck(json: data)
+            }
+        }
     }
     
-    func drawCards() {
-        // https://deckofcardsapi.com/api/deck/<<deck_id>>/draw/?count=5
-
+    func parseDeck(json: Data) {
+        
+        do {
+            let jsonDeck = try decoder.decode(Deck.self, from: json)
+            self.deck = jsonDeck
+        }
+        catch {
+            print(error)
+        }
     }
     
+    func drawCards(deck: Deck?) {
+        
+        guard let deckID = deck?.deck_id else {
+            getDeck()
+            drawCards(deck: self.deck)
+            return
+        }
+        
+        let urlString = "https://deckofcardsapi.com/api/deck/\(deckID)/draw/?count=5"
+        
+        if let url = URL(string: urlString) {
+            
+            if let data = try? Data(contentsOf: url) {
+                
+                parseCards(json: data)
+                
+            }
+        }
+        
+    }
     
+    func parseCards(json: Data) {
+        
+        do {
+            let jsonCards = try decoder.decode(CardObjects.self, from: json)
+            
+            for jsonCard in jsonCards.cards {
+                let card = Card(card: jsonCard, uiImage: getImage(urlString: jsonCard.image))
+                self.cards.append(card)
+            }
+        }
+        catch {
+            print(error)
+        }
+    }
     
+    func getImage(urlString: String) -> UIImage? {
+        
+        if let url = URL(string: urlString) {
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    return image
+                }
+            }
+        }
+        return nil
+    }
 }
+

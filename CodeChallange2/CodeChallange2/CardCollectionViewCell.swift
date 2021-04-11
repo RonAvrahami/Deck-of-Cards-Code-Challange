@@ -9,7 +9,9 @@ import UIKit
 
 class CardCollectionViewCell: UICollectionViewCell {
     
-    func update(card: Card) {
+    @IBOutlet weak var imageView: UIImageView!
+    
+    func update(image: UIImage) {
         
     }
 }

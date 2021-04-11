@@ -18,12 +18,15 @@ class ViewController: UIViewController, UICollectionViewDelegate {
     var dataSource: CardDataSource!
     var sections = [Section]()
     var cards = [Card]()
+    var jsonManager = JSONManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         collectionView.delegate = self
         collectionView.allowsSelection = false
+        
+        jsonManager.drawCards(deck: jsonManager.deck)
     }
     
     func configureDataSource() {
@@ -31,7 +34,8 @@ class ViewController: UIViewController, UICollectionViewDelegate {
         dataSource = CardDataSource(collectionView: collectionView, cellProvider: { (collectionView, indexPath, card) -> UICollectionViewCell? in
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cardCell", for: indexPath) as? CardCollectionViewCell
-            cell?.update(card: card)
+
+            //cell?.update(image: image)
             return cell
         })
         updateDataSource()
@@ -41,6 +45,7 @@ class ViewController: UIViewController, UICollectionViewDelegate {
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, Card>()
         snapshot.appendSections([.main])
+        
         snapshot.appendItems(cards)
         
         sections = snapshot.sectionIdentifiers
