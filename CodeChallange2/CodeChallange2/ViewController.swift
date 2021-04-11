@@ -7,14 +7,47 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+enum Section {
+    case main
+}
 
+class ViewController: UIViewController, UICollectionViewDelegate {
+
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    var dataSource: CardDataSource!
+    var sections = [Section]()
+    var cards = [Card]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        print("")
-    }
 
+        collectionView.delegate = self
+        collectionView.allowsSelection = false
+    }
+    
+    func configureDataSource() {
+        
+        dataSource = CardDataSource(collectionView: collectionView, cellProvider: { (collectionView, indexPath, card) -> UICollectionViewCell? in
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cardCell", for: indexPath) as? CardCollectionViewCell
+            cell?.update(card: card)
+            return cell
+        })
+        updateDataSource()
+    }
+    
+    func updateDataSource() {
+        
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Card>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(cards)
+        
+        sections = snapshot.sectionIdentifiers
+        dataSource.apply(snapshot, animatingDifferences: true, completion: nil )
+    }
 
 }
 
+class CardDataSource: UICollectionViewDiffableDataSource<Section, Card> {
+}
