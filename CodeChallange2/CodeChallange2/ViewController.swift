@@ -12,7 +12,7 @@ enum Section {
 }
 
 class ViewController: UIViewController, UICollectionViewDelegate {
-
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     var dataSource: CardDataSource!
@@ -22,11 +22,16 @@ class ViewController: UIViewController, UICollectionViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         collectionView.delegate = self
         collectionView.allowsSelection = false
+        //collectionView.isScrollEnabled = false
         
-        jsonManager.drawCards(deck: jsonManager.deck)
+        collectionView.collectionViewLayout = configureCollectionViewLayout()
+        
+        jsonManager.drawCards(inputDeck: jsonManager.deck)
+        cards = jsonManager.cards
+        configureDataSource()
     }
     
     func configureDataSource() {
@@ -34,8 +39,11 @@ class ViewController: UIViewController, UICollectionViewDelegate {
         dataSource = CardDataSource(collectionView: collectionView, cellProvider: { (collectionView, indexPath, card) -> UICollectionViewCell? in
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cardCell", for: indexPath) as? CardCollectionViewCell
-
-            //cell?.update(image: image)
+            
+            if let image = card.uiImage {
+                cell?.update(image: image)
+            }
+            
             return cell
         })
         updateDataSource()
@@ -49,9 +57,54 @@ class ViewController: UIViewController, UICollectionViewDelegate {
         snapshot.appendItems(cards)
         
         sections = snapshot.sectionIdentifiers
-        dataSource.apply(snapshot, animatingDifferences: true, completion: nil )
+        dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
     }
+    
+    func configureCollectionViewLayout() -> UICollectionViewLayout {
 
+        let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+
+            let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(100), heightDimension: .absolute(200))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 5)
+            group.interItemSpacing = .fixed(-100)
+            let section = NSCollectionLayoutSection(group: group)
+            //section.interGroupSpacing = -100
+
+            return section
+        }
+        return layout
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        let myrect = cell.frame
+        cell.frame = CGRect(x: cell.frame.origin.x+320, y: cell.frame.origin.y, width: cell.frame.size.width, height: cell.frame.size.height)
+        
+        let value = Double(indexPath.row)*0.1
+        UIView.animate(withDuration: 0.8, delay:value, options: .curveEaseInOut, animations: {
+            
+            cell.frame = CGRect(x: myrect.origin.x+100, y: myrect.origin.y, width: myrect.size.width, height: myrect.size.height)
+            
+        }) { (finish) in
+            
+            UIView.animate(withDuration: 0.8, animations: {
+                cell.frame = myrect
+            })
+        }
+    }
+    
+    @IBAction func redrawButtonTapped(_ sender: Any) {
+        cards.removeAll()
+        updateDataSource()
+        jsonManager.drawCards(inputDeck: jsonManager.deck)
+        cards = jsonManager.cards
+        updateDataSource()
+    }
+    @IBAction func evaluateButtonTapped(_ sender: Any) {
+    }
 }
 
 class CardDataSource: UICollectionViewDiffableDataSource<Section, Card> {

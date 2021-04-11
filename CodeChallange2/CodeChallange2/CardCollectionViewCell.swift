@@ -12,6 +12,6 @@ class CardCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     
     func update(image: UIImage) {
-        
+        imageView.image = image
     }
 }

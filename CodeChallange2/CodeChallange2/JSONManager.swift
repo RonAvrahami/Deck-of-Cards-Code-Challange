@@ -36,25 +36,27 @@ class JSONManager {
         }
     }
     
-    func drawCards(deck: Deck?) {
+    func drawCards(inputDeck: Deck?) {
         
-        guard let deckID = deck?.deck_id else {
+        if inputDeck == nil {
             getDeck()
-            drawCards(deck: self.deck)
-            return
+        } else if deck!.remaining < 8 {
+            getDeck()
+        } else {
+            deck?.remaining -= 5
         }
         
-        let urlString = "https://deckofcardsapi.com/api/deck/\(deckID)/draw/?count=5"
+        let urlString = "https://deckofcardsapi.com/api/deck/\(deck!.deck_id)/draw/?count=5"
         
         if let url = URL(string: urlString) {
             
             if let data = try? Data(contentsOf: url) {
                 
+                cards.removeAll()
                 parseCards(json: data)
                 
             }
         }
-        
     }
     
     func parseCards(json: Data) {
