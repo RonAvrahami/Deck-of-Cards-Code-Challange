@@ -20,9 +20,12 @@ class ViewController: UIViewController, UICollectionViewDelegate {
     
     var dataSource: CardDataSource!
     var sections = [Section]()
+    var cardsInDeck = [Card]()
     var cards = [Card]()
     var jsonManager = JSONManager()
+    var evaluationManager = EvaluationManager()
     var delay: TimeInterval = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,8 +35,9 @@ class ViewController: UIViewController, UICollectionViewDelegate {
         
         collectionView.collectionViewLayout = configureCollectionViewLayout()
         
+        jsonManager.getDeck()
         jsonManager.drawCards()
-        cards = jsonManager.cards
+        loadCards()
         configureDataSource()
         
         evaluationLabel.isHidden = true
@@ -63,7 +67,6 @@ class ViewController: UIViewController, UICollectionViewDelegate {
         sections = snapshot.sectionIdentifiers
         dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
         
-        print(cards)
     }
     
     func configureCollectionViewLayout() -> UICollectionViewLayout {
@@ -86,7 +89,7 @@ class ViewController: UIViewController, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         cell.isHidden = true
-        self.evaluateButton.isEnabled = false
+        //self.evaluateButton.isEnabled = false
         self.redrawButton.isEnabled = false
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             
@@ -102,25 +105,42 @@ class ViewController: UIViewController, UICollectionViewDelegate {
                 
             }) { (_) in
                 self.redrawButton.isEnabled = true
-                self.evaluateButton.isEnabled = true
+                //self.evaluateButton.isEnabled = true
             }
         }
+    }
+    
+    func loadCards() {
+        
+        cards.removeAll()
+        for index in 0...4 {
+            cards.append(jsonManager.cards[index])
+        }
+        jsonManager.cards.removeFirst(5)
     }
     
     @IBAction func redrawButtonTapped(_ sender: Any) {
        
         DispatchQueue.main.async { [self] in
+            
+            loadCards()
+            
+            updateDataSource()
+            
             evaluationLabel.text = ""
             evaluationLabel.isHidden = true
-            
-            jsonManager.drawCards()
-            cards = jsonManager.cards
-            updateDataSource()
+        }
+        
+        if jsonManager.cards.count < 13 {
+            DispatchQueue.global().async {
+                self.jsonManager.drawCards()
+            }
         }
     }
     @IBAction func evaluateButtonTapped(_ sender: Any) {
+    
         evaluationLabel.isHidden = false
-        evaluationLabel.text = "Evaluation: \((evaluateHand(hand: cards)))"
+        evaluationLabel.text = "Evaluation: \((evaluationManager.evaluateHand(hand: cards)))"
         
     }
 }

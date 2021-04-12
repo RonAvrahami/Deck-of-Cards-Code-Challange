@@ -40,7 +40,7 @@ class JSONManager {
         
         getDeck()
         
-        let urlString = "https://deckofcardsapi.com/api/deck/\(deck!.deck_id)/draw/?count=5"
+        let urlString = "https://deckofcardsapi.com/api/deck/\(deck!.deck_id)/draw/?count=52"
         
         if let url = URL(string: urlString) {
             
@@ -61,7 +61,8 @@ class JSONManager {
             for jsonCard in jsonCards.cards {
                 let card = Card(card: jsonCard, uiImage: getImage(urlString: jsonCard.image))
                 self.cards.append(card)
-            }
+                
+            }            
         }
         catch {
             print(error)
@@ -78,17 +79,6 @@ class JSONManager {
             }
         }
         return nil
-    }
-    
-    func evaluateHand() {
-        let urlString = "https://api.pokerapi.dev/v1/winner/texas_holdem?cc=AC,KD,QH,JS,7C&pc[]=10S,8C&pc[]=3S,2C&pc[]=QS,JH"
-        
-        if let url = URL(string: urlString) {
-            if let data = try? Data(contentsOf: url) {
-                
-                parseDeck(json: data)
-            }
-        }
     }
 }
 
