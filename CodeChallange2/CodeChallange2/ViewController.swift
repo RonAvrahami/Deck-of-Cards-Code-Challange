@@ -108,10 +108,11 @@ class ViewController: UIViewController, UICollectionViewDelegate {
     }
     
     @IBAction func redrawButtonTapped(_ sender: Any) {
-        evaluationLabel.text = ""
-        evaluationLabel.isHidden = true
-        
+       
         DispatchQueue.main.async { [self] in
+            evaluationLabel.text = ""
+            evaluationLabel.isHidden = true
+            
             jsonManager.drawCards()
             cards = jsonManager.cards
             updateDataSource()

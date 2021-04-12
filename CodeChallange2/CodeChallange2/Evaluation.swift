@@ -212,7 +212,6 @@ func eval(suit: [CardObject], seq: [Int], average: Int, completion: @escaping (S
         completion("Lucky! Straight!")
         
     } else {
-        
         completion(nil)
     }
 }
