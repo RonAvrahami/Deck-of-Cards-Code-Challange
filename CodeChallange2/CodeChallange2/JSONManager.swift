@@ -36,15 +36,9 @@ class JSONManager {
         }
     }
     
-    func drawCards(inputDeck: Deck?) {
+    func drawCards() {
         
-        if inputDeck == nil {
-            getDeck()
-        } else if deck!.remaining < 8 {
-            getDeck()
-        } else {
-            deck?.remaining -= 5
-        }
+        getDeck()
         
         let urlString = "https://deckofcardsapi.com/api/deck/\(deck!.deck_id)/draw/?count=5"
         
@@ -84,6 +78,17 @@ class JSONManager {
             }
         }
         return nil
+    }
+    
+    func evaluateHand() {
+        let urlString = "https://api.pokerapi.dev/v1/winner/texas_holdem?cc=AC,KD,QH,JS,7C&pc[]=10S,8C&pc[]=3S,2C&pc[]=QS,JH"
+        
+        if let url = URL(string: urlString) {
+            if let data = try? Data(contentsOf: url) {
+                
+                parseDeck(json: data)
+            }
+        }
     }
 }
 

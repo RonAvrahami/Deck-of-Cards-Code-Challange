@@ -16,6 +16,7 @@
 		0E59838326238393008DC10E /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E59838226238393008DC10E /* Deck.swift */; };
 		0E5983862623843F008DC10E /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5983852623843F008DC10E /* CardCollectionViewCell.swift */; };
 		0E598389262384CE008DC10E /* JSONManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E598388262384CE008DC10E /* JSONManager.swift */; };
+		0E5983A126240347008DC10E /* Evaluation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5983A026240347008DC10E /* Evaluation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		0E59838226238393008DC10E /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
 		0E5983852623843F008DC10E /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
 		0E598388262384CE008DC10E /* JSONManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONManager.swift; sourceTree = "<group>"; };
+		0E5983A026240347008DC10E /* Evaluation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Evaluation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				0E59837126237DD2008DC10E /* ViewController.swift */,
 				0E5983852623843F008DC10E /* CardCollectionViewCell.swift */,
 				0E59838226238393008DC10E /* Deck.swift */,
+				0E5983A026240347008DC10E /* Evaluation.swift */,
 				0E598388262384CE008DC10E /* JSONManager.swift */,
 				0E59837326237DD2008DC10E /* Main.storyboard */,
 				0E59837626237DD3008DC10E /* Assets.xcassets */,
@@ -148,6 +151,7 @@
 			files = (
 				0E59837226237DD2008DC10E /* ViewController.swift in Sources */,
 				0E598389262384CE008DC10E /* JSONManager.swift in Sources */,
+				0E5983A126240347008DC10E /* Evaluation.swift in Sources */,
 				0E59836E26237DD2008DC10E /* AppDelegate.swift in Sources */,
 				0E59837026237DD2008DC10E /* SceneDelegate.swift in Sources */,
 				0E5983862623843F008DC10E /* CardCollectionViewCell.swift in Sources */,

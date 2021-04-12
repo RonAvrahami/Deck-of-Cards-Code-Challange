@@ -17,11 +17,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="26" translatesAutoresizingMaskIntoConstraints="NO" id="TGz-XR-WWf">
-                                <rect key="frame" x="20" y="626" width="374" height="36"/>
+                                <rect key="frame" x="20" y="616" width="374" height="46"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OAf-kP-Dl7">
-                                        <rect key="frame" x="0.0" y="0.0" width="174" height="36"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="174" height="46"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="Redraw">
                                             <color key="titleColor" red="0.74453612048216544" green="0.14163508077129397" blue="0.12344302004731099" alpha="0.89803921568627454" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
@@ -30,8 +30,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zkG-UR-eJp">
-                                        <rect key="frame" x="200" y="0.0" width="174" height="36"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <rect key="frame" x="200" y="0.0" width="174" height="46"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="Evaluate">
                                             <color key="titleColor" red="0.74453612049999995" green="0.14163508080000001" blue="0.12344302" alpha="0.8980392157" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
@@ -42,7 +42,7 @@
                                 </subviews>
                             </stackView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="uYS-EL-Ba5">
-                                <rect key="frame" x="8" y="244" width="398" height="302"/>
+                                <rect key="frame" x="8" y="214" width="398" height="322"/>
                                 <color key="backgroundColor" red="0.0" green="0.18552059600000001" blue="0.0080402572390000007" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="5sa-qs-q2I">
                                     <size key="itemSize" width="128" height="128"/>
@@ -52,7 +52,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cardCell" id="DJT-5f-ycg" customClass="CardCollectionViewCell" customModule="CodeChallange2" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="71" width="120" height="160"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="120" height="160"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="MDW-NA-QNx">
                                             <rect key="frame" x="0.0" y="0.0" width="120" height="160"/>
@@ -76,21 +76,35 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2WG-H4-7hz">
+                                <rect key="frame" x="20" y="144" width="374" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Cfq-QH-loG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                <color key="textColor" red="0.74453612049999995" green="0.14163508080000001" blue="0.12344302" alpha="0.8980392157" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.0" green="0.18552059597439241" blue="0.0080402572387205315" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="TGz-XR-WWf" firstAttribute="top" secondItem="uYS-EL-Ba5" secondAttribute="bottom" constant="80" id="BCA-yS-JrX"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2WG-H4-7hz" secondAttribute="trailing" constant="20" id="KzV-Rt-inV"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TGz-XR-WWf" secondAttribute="trailing" constant="20" id="QDI-ed-kG3"/>
                             <constraint firstItem="TGz-XR-WWf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="UXE-na-y9i"/>
+                            <constraint firstItem="2WG-H4-7hz" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="YC8-Mg-buT"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="uYS-EL-Ba5" secondAttribute="trailing" constant="8" id="Zzp-Vi-qUm"/>
+                            <constraint firstItem="uYS-EL-Ba5" firstAttribute="top" secondItem="2WG-H4-7hz" secondAttribute="bottom" constant="40" id="fR2-kP-vsR"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="TGz-XR-WWf" secondAttribute="bottom" constant="200" id="j2Q-9j-js1"/>
-                            <constraint firstItem="uYS-EL-Ba5" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="200" id="jGJ-yu-rBr"/>
+                            <constraint firstItem="2WG-H4-7hz" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="kFA-sP-a7w"/>
                             <constraint firstItem="uYS-EL-Ba5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="rFQ-3d-JLz"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="uYS-EL-Ba5" id="Sl2-Rs-2Vc"/>
+                        <outlet property="evaluateButton" destination="zkG-UR-eJp" id="D7v-Kf-yCG"/>
+                        <outlet property="evaluationLabel" destination="2WG-H4-7hz" id="0fU-1H-v5d"/>
                         <outlet property="redrawButton" destination="OAf-kP-Dl7" id="Uxu-oM-nMw"/>
                     </connections>
                 </viewController>

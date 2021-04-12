@@ -15,12 +15,14 @@ class ViewController: UIViewController, UICollectionViewDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var redrawButton: UIButton!
+    @IBOutlet weak var evaluateButton: UIButton!
+    @IBOutlet weak var evaluationLabel: UILabel!
     
     var dataSource: CardDataSource!
     var sections = [Section]()
     var cards = [Card]()
     var jsonManager = JSONManager()
-    
+    var delay: TimeInterval = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,9 +32,11 @@ class ViewController: UIViewController, UICollectionViewDelegate {
         
         collectionView.collectionViewLayout = configureCollectionViewLayout()
         
-        jsonManager.drawCards(inputDeck: jsonManager.deck)
+        jsonManager.drawCards()
         cards = jsonManager.cards
         configureDataSource()
+        
+        evaluationLabel.isHidden = true
     }
     
     func configureDataSource() {
@@ -59,6 +63,7 @@ class ViewController: UIViewController, UICollectionViewDelegate {
         sections = snapshot.sectionIdentifiers
         dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
         
+        print(cards)
     }
     
     func configureCollectionViewLayout() -> UICollectionViewLayout {
@@ -81,31 +86,41 @@ class ViewController: UIViewController, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         cell.isHidden = true
+        self.evaluateButton.isEnabled = false
         self.redrawButton.isEnabled = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            
             cell.isHidden = false
+            self.delay = 0.4
             let myreact = cell.frame
-                    cell.frame = CGRect(x: cell.frame.origin.x+320, y: cell.frame.origin.y, width: cell.frame.size.width, height: cell.frame.size.height)
-
-                     let value = Double(indexPath.row)*0.1
-                     UIView.animate(withDuration: 0.8, delay:value, options: .curveEaseInOut, animations: {
-
-                        cell.frame = CGRect(x: myreact.origin.x, y: myreact.origin.y, width: myreact.size.width, height: myreact.size.height)
-
-                     }) { (_) in
+            cell.frame = CGRect(x: cell.frame.origin.x+320, y: cell.frame.origin.y, width: cell.frame.size.width, height: cell.frame.size.height)
+            
+            let value = Double(indexPath.row)*0.1
+            UIView.animate(withDuration: 0.6, delay:value, options: .curveEaseInOut, animations: {
+                
+                cell.frame = CGRect(x: myreact.origin.x, y: myreact.origin.y, width: myreact.size.width, height: myreact.size.height)
+                
+            }) { (_) in
                 self.redrawButton.isEnabled = true
+                self.evaluateButton.isEnabled = true
             }
         }
     }
     
     @IBAction func redrawButtonTapped(_ sender: Any) {
-        cards.removeAll()
-        updateDataSource()
-        jsonManager.drawCards(inputDeck: jsonManager.deck)
-        cards = jsonManager.cards
-        updateDataSource()
+        evaluationLabel.text = ""
+        evaluationLabel.isHidden = true
+        
+        DispatchQueue.main.async { [self] in
+            jsonManager.drawCards()
+            cards = jsonManager.cards
+            updateDataSource()
+        }
     }
     @IBAction func evaluateButtonTapped(_ sender: Any) {
+        evaluationLabel.isHidden = false
+        evaluationLabel.text = "Evaluation: \((evaluateHand(hand: cards)))"
+        
     }
 }
 
