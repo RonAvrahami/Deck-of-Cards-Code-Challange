@@ -97,11 +97,6 @@ class EvaluationManager {
         
         //MARK: -- Evaluation
         
-        if valuesCheck(valuesArray: valuesArray, values: values) == "Cool! Straight!!" {
-            
-            return "Cool! Straight!!"
-        }
-        
         for suit in suits {
             
             var suitString: String?
@@ -112,8 +107,8 @@ class EvaluationManager {
                     return
                 }
                 guard sequence.first != 777 else {
-                    suitString = "Holy Cow! Royal Flush!!!"
-                    return
+                    suitString = "Royal Flush, Amazing!!!"
+                    return 
                 }
                 
                 var seq = sequence
@@ -142,7 +137,7 @@ class EvaluationManager {
     
     func suitCheck(suit: [CardObject], royalty: [CardObject], completion: @escaping ([Double]) -> ()) {
         
-        if royalty.count == 5 {
+        if royalty.count == 5 && suit.count == 5 {
             completion([777])
         } else {
             let straight = straightCheck(cards: suit)
@@ -217,10 +212,10 @@ class EvaluationManager {
     func evaluateSuit(suit: [CardObject], seq: [Double], rangeCheck: Double,average: Double, completion: @escaping (String?) -> ()) {
         
         if suit.count == 5 && rangeCheck == 4 {
-            completion("Super Lucky!! Straight Flush!")
+            completion("Straight Flush, Super Lucky!!")
             
         } else if suit.count == 5 {
-            completion("Lucky! Flush!")
+            completion("Flush, Pretty Lucky!")
             
         } else {
             completion(nil)
@@ -243,13 +238,13 @@ class EvaluationManager {
         let rangeCheck = seq.last! - seq.first!
         
         if seq.count == 5 && rangeCheck == 4 && seq[2] == average {
-            return "Cool! Straight!!"
+            return "Straight, Pretty Neat!"
         } else {
             
             for value in valuesArray {
                 
                 if value.count == 4 {
-                    print("No Way! Four of a Kind!!")
+                    return "Four of a Kind, thats Lucky!"
                     
                 } else if value.count == 3 {
                     threePair += 1
@@ -259,16 +254,16 @@ class EvaluationManager {
             }
             
             if threePair != 0 && twoPair != 0 {
-                return "Wow! Full House!!"
+                return "Full House, Wow!!"
                 
             } else if threePair == 1 {
-                return "Nice! Three of a Kind!!"
+                return "Three of a Kind, Nice!"
                 
             } else if twoPair == 2 {
-                return "Pretty good! Two Pair!!"
+                return "Two Pair, Pretty good!"
                 
             }  else if twoPair == 1 {
-                return "Not bad! Pair!!"
+                return "Pair, Not bad!"
                 
             } else {
                 return "Bad Hand..."

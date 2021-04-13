@@ -89,7 +89,7 @@ class ViewController: UIViewController, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         cell.isHidden = true
-        //self.evaluateButton.isEnabled = false
+        self.evaluateButton.isEnabled = false
         self.redrawButton.isEnabled = false
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             
@@ -105,7 +105,7 @@ class ViewController: UIViewController, UICollectionViewDelegate {
                 
             }) { (_) in
                 self.redrawButton.isEnabled = true
-                //self.evaluateButton.isEnabled = true
+                self.evaluateButton.isEnabled = true
             }
         }
     }
@@ -138,7 +138,6 @@ class ViewController: UIViewController, UICollectionViewDelegate {
         }
     }
     @IBAction func evaluateButtonTapped(_ sender: Any) {
-    
         evaluationLabel.isHidden = false
         evaluationLabel.text = "Evaluation: \((evaluationManager.evaluateHand(hand: cards)))"
         
