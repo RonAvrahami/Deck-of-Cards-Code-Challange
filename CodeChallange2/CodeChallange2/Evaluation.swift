@@ -21,8 +21,6 @@ class EvaluationManager {
             cards.append(card.card)
         }
         
-        var royalty = [CardObject]()
-        
         var clubs = [CardObject]()
         var diamonds = [CardObject]()
         var spades = [CardObject]()
@@ -45,19 +43,14 @@ class EvaluationManager {
         for card in cards {
             
             if card.value == "ACE" {
-                royalty.append(card)
                 aces.append(card)
             } else if card.value == "KING" {
-                royalty.append(card)
                 kings.append(card)
             } else if card.value == "QUEEN" {
-                royalty.append(card)
                 queens.append(card)
             } else if card.value == "JACK" {
-                royalty.append(card)
                 jacks.append(card)
             } else if card.value == "10" {
-                royalty.append(card)
                 tens.append(card)
             } else if card.value == "9" {
                 nines.append(card)
@@ -90,6 +83,7 @@ class EvaluationManager {
         
         let suits = [clubs, diamonds, spades, hearts]
         let valuesArray = [aces, kings, queens, jacks, tens, nines, eights, sevens, sixes, fives, fours, threes, twos]
+        let royalty = [aces.count, kings.count, queens.count, jacks.count, tens.count]
         var values = [CardObject]()
         for value in valuesArray {
             values.append(contentsOf: value)
@@ -135,9 +129,9 @@ class EvaluationManager {
         return "ERROR"
     }
     
-    func suitCheck(suit: [CardObject], royalty: [CardObject], completion: @escaping ([Double]) -> ()) {
+    func suitCheck(suit: [CardObject], royalty: [Int], completion: @escaping ([Double]) -> ()) {
         
-        if royalty.count == 5 && suit.count == 5 {
+        if !royalty.contains(0) && suit.count == 5 {
             completion([777])
         } else {
             let straight = straightCheck(cards: suit)
